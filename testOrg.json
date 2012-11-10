@@ -1,0 +1,28 @@
+{
+  "types" : "Electric Space",
+  "stats":
+    {
+      "health":  128,
+      "meter":    64,
+      "attack":  128,
+      "defense":  64,
+      "special":  64,
+      "resist":   32,
+      "speed":    64,
+      "evade":    64    
+    },
+  "moves":
+    {
+      "Basic Test Attack":
+        {
+          "type" : "Time",
+          "mode" : "Attack",
+          "acc" : 64,
+          "dmg" : 64,
+          "properties": {}
+        },
+      "Basic Test Special":
+        {
+        }
+    }  
+}
