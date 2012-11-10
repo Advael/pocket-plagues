@@ -17,7 +17,7 @@ for k in bitkeys:
   bitkeys[k]["offense"] = names[bitkeys[k]["name"]]["offense"]
   bitkeys[k]["defense"] = names[bitkeys[k]["name"]]["defense"]
 
-def checkType(key):
+def check(key):
   """
     (valid type name or bitstring,
      string, int, or hex to use as bitstring)
@@ -45,8 +45,8 @@ def matchup(offense, defense):
   """
   num = 1
   denom = 1
-  offense = checkType(offense)
-  defense = checkType(defense)[::-1]
+  offense = check(offense)
+  defense = check(defense)[::-1]
   for i in range(0, 16):
     if defense[i]:
       num *= bitkeys[offense]["offense"][i]
