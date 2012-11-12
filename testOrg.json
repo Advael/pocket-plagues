@@ -2,14 +2,14 @@
   "types" : "Electric Space",
   "stats":
     {
-      "health":  128,
-      "meter":    64,
-      "attack":  128,
-      "defense":  64,
-      "special":  64,
-      "resist":   32,
-      "speed":    64,
-      "evade":    64    
+      "health":  100,
+      "meter":    50,
+      "attack":  100,
+      "defense":  50,
+      "special":  50,
+      "resist":   25,
+      "speed":    50,
+      "evade":    50    
     },
   "moves":
     {
@@ -17,12 +17,10 @@
         {
           "type" : "Time",
           "mode" : "Attack",
-          "acc" : 64,
-          "dmg" : 64,
-          "properties": {}
-        },
-      "Basic Test Special":
-        {
+          "acc" : 50,
+          "dmg" : 50,
+          "properties": {},
+          "selected": 1
         }
     }  
 }
