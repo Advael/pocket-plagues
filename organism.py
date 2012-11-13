@@ -71,5 +71,7 @@ class organism:
       if count > self.moveTotalLimit \
       or activeCount > self.moveActiveLimit:
         raise ValueError(self.moveExceedMessage)
-
     return points
+
+  def setController(self, function):
+    self.control = function
