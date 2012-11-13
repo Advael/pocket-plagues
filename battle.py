@@ -1,12 +1,15 @@
 from organism import organism
+import control
 
 class battle:
   def __init__(self, one, two):
-    #Eventually, organism vs trainer and trainer vs trainer will be handled
-    if  type(one) == type(organism) \
-    and type(two) == type(organism):
-      pass
+    for i in [one, two]:
+      if type(i) == type(organism):
+        i.setController(control.dumb)
+      elif type(i) == type(trainer):
+        i.setController(control.basicPlayer)
   def turn(self):
-    #Get input
+    pass
+
     #Do trainer actions simultaneously
     #Do organism actions in descending order of speed

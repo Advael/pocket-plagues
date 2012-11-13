@@ -45,9 +45,8 @@ class organism:
 
   def getMoves(self):
     points = 0
-    count = 0
-    activeCount = 0
     self.moves = self._data["moves"]
+    self.active = {}
 
     for i in self.moves:
       self.moves[i]["typekey"] = \
@@ -64,14 +63,18 @@ class organism:
       if cost > self.movePointLimit:
         raise ValueError(self.pointExceedMessage)
       points += cost
-      
       if not self.moves[i]["selected"] == 0:
-        activeCount += 1
-      count += 1
-      if count > self.moveTotalLimit \
-      or activeCount > self.moveActiveLimit:
+        self.active[i] = self.moves[i]
+      if len(self.moves) > self.moveTotalLimit \
+      or len(self.active) > self.moveActiveLimit:
         raise ValueError(self.moveExceedMessage)
     return points
 
   def setController(self, function):
     self.control = function
+
+  def check(self):
+    pass #check for triggers and passive effects
+
+  def act(self):
+    return self.control(self.active)
