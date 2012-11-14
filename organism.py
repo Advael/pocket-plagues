@@ -13,17 +13,17 @@ exceedError = "Maximum valid value exceeded"
 
 class organism:
   def __init__(self, name):
-    self.__dict__=dict(self.__dict__.items()+load(open(name)).items())
+    self.__dict__ = dict(self.__dict__.items() + load(open(name)).items())
     self.types, self.points = self._types(self.types)
     self.stats = self._stats(self.stats)
     self.moves = [self._move(m) for m in self.moves.items()]
     self.actives = [m for m in self.moves if m.active == 1]
     self.points += self.stats._p + sum([m._p for m in self.moves])
-#    assert self.points <= costMax, exceedError
+    assert self.points <= costMax, exceedError
 
   def _types(self, types):
-      t=map(check, set(types.split(" ")))
-      p = typeCost * max((len(self.types) - 1), 0)
+      t = set(map(check, types.split(" ")))
+      p = typeCost * max(len(t), 0)
       return t, p
 
   class _stats:
