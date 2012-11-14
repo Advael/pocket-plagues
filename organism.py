@@ -1,76 +1,63 @@
 from simplejson import load
-import typeMatrix
+from typeMatrix import check
+
+typeCost = 50
+statMax = 100
+moveMax = 100
+costMax = 1000
+moveCount = 8
+activeCount = 4
+
+exceedError = "Maximum valid value exceeded"
+
 
 class organism:
-  typeCost = 50
-  statPointLimit = 100
-  movePointLimit = 100
-  totalPointLimit = 1000
-  moveTotalLimit = 8
-  moveActiveLimit = 4
-  pointExceedMessage = "Point cost exceeded"
-  movesExceedMessage = "Too many moves"
+  points = 0
 
-  def __init__(self, jsonName):
-    self._data = load(open(jsonName + ".json"))
-    self.points = self.getTypes() \
-                + self.getStats() \
-                + self.getMoves()
-    if self.points > self.totalPointLimit:
-      raise ValueError(self.pointExceedMessage)
+  def __init__(self, name):
+    self._data = load(open(name + ".json"))
+    self.types() 
+    self.stats() 
+    self.moves()
+    del self._data
+    assert self.points <= costMax, exceedError
+
+  def types(self):
+    self.types=map(check, set(self._data["types"].split(" ")))
+    self.points += typeCost * max((len(self.types) - 1), 0)
   
-  def getTypes(self):
-    points = 0
-    hasType = False
-    self.types = (self._data["types"].split(" "))
-    self.typekey = typeMatrix.check(0)
-    for t in self.types:
-      if not hasType:
-        hasType = True
-      else:
-        points += self.typeCost
-      self.typekey |= typeMatrix.check(t)
-    return points 
-  
-  def getStats(self):
+  def stats(self):
     self.stats = self._data["stats"]
-    for i in self.stats:
-      if self.stats[i] > self.statPointLimit:
-        raise ValueError(self.pointExceedMessage)
-    points = sum([self.stats[i] for i in self.stats])
+    for i in self.stats.values():
+      assert i <= statMax, exceedError
+      self.points += i
     self.stats["health"] *= 2
     self.stats["meter"] /= 2
     self.stats["evade"] /= 2
-    return points
 
-  def getMoves(self):
+  def moves(self):
     points = 0
-    self.moves = self._data["moves"]
-    self.active = {}
-
-    for i in self.moves:
-      self.moves[i]["typekey"] = \
-      typeMatrix.check(self.moves[i]["type"])
-
-      if self.moves[i]["mode"].title() == "Attack" \
-      or self.moves[i]["mode"].title()=="Special":
-        cost = self.moves[i]["dmg"] + self.moves[i]["acc"]
-      elif self.moves[i]["mode"].title() == "Spell":
+    self.moves, self.abilities = {}, {}
+    for k, v in self._data["moves"].items():
+      v["type"] = check(v["type"])
+      if v["mode"].title() == "Attack" \
+      or v["mode"].title() == "Special":
+        cost = v["dmg"] + v["acc"]
+      elif v["mode"].title() == "Spell":
         pass
-      elif self.moves[i]["properties"]:
+      if v["properties"]:
         pass
-
-      if cost > self.movePointLimit:
-        raise ValueError(self.pointExceedMessage)
+      assert cost <= moveMax, exceedError
       points += cost
-      if not self.moves[i]["selected"] == 0:
-        self.active[i] = self.moves[i]
-      if len(self.moves) > self.moveTotalLimit \
-      or len(self.active) > self.moveActiveLimit:
-        raise ValueError(self.moveExceedMessage)
-    return points
+      if v["active"] == 1:
+        self.moves[k] = v
+      else:
+        self.abilities[k] = v
+    assert len(self.moves)+len(self.abilities) <= moveCount \
+    and len(self.moves) <= activeCount, exceedError
+    self.points += points
 
-  def setController(self, function):
+  def control(self, function):
     self.control = function
 
   def check(self):
