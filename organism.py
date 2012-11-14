@@ -1,5 +1,6 @@
 from simplejson import load
 from typeMatrix import check
+from fuzzywuzzy import process, fuzz
 
 typeCost = 50
 statMax = 100
@@ -10,52 +11,45 @@ activeCount = 4
 
 exceedError = "Maximum valid value exceeded"
 
-
 class organism:
-  points = 0
-
   def __init__(self, name):
-    self._data = load(open(name + ".json"))
-    self.types() 
-    self.stats() 
-    self.moves()
-    del self._data
-    assert self.points <= costMax, exceedError
+    self.__dict__=dict(self.__dict__.items()+load(open(name)).items())
+    self.types, self.points = self._types(self.types)
+    self.stats = self._stats(self.stats)
+    self.moves = [self._move(m) for m in self.moves.items()]
+    self.actives = [m for m in self.moves if m.active == 1]
+    self.points += self.stats._p + sum([m._p for m in self.moves])
+#    assert self.points <= costMax, exceedError
 
-  def types(self):
-    self.types=map(check, set(self._data["types"].split(" ")))
-    self.points += typeCost * max((len(self.types) - 1), 0)
-  
-  def stats(self):
-    self.stats = self._data["stats"]
-    for i in self.stats.values():
-      assert i <= statMax, exceedError
-      self.points += i
-    self.stats["health"] *= 2
-    self.stats["meter"] /= 2
-    self.stats["evade"] /= 2
+  def _types(self, types):
+      t=map(check, set(types.split(" ")))
+      p = typeCost * max((len(self.types) - 1), 0)
+      return t, p
 
-  def moves(self):
-    points = 0
-    self.moves, self.abilities = {}, {}
-    for k, v in self._data["moves"].items():
-      v["type"] = check(v["type"])
-      if v["mode"].title() == "Attack" \
-      or v["mode"].title() == "Special":
-        cost = v["dmg"] + v["acc"]
-      elif v["mode"].title() == "Spell":
+  class _stats:
+    def __init__(self, stats):
+      stats["_p"] = 0
+      for i in stats.values():
+        assert i <= statMax, exceedError
+        stats["_p"] += i
+      self.__dict__ = stats
+      self.health *= 2
+      self.meter /= 2
+      self.evade /= 2
+
+  class _move:
+    def __init__(self, moveTuple):
+      self.__dict__ = moveTuple[1]
+      self.name = moveTuple[0]
+      self.type = check(self.type)
+      if process.extract(self.mode, ["Attack", "Special"])[1] > 90:
+        self._p = self.dmg + self.acc
+      elif fuzz.ratio(self.mode, "Spell") > 90:
         pass
-      if v["properties"]:
+      if self.properties:
         pass
-      assert cost <= moveMax, exceedError
-      points += cost
-      if v["active"] == 1:
-        self.moves[k] = v
-      else:
-        self.abilities[k] = v
-    assert len(self.moves)+len(self.abilities) <= moveCount \
-    and len(self.moves) <= activeCount, exceedError
-    self.points += points
+      assert self._p <= moveMax, exceedError
+      self._p = max(self._p, 0)
 
   def control(self, function):
     self.control = function
@@ -64,4 +58,4 @@ class organism:
     pass #check for triggers and passive effects
 
   def act(self):
-    return self.control(self.active)
+    return self.control(self.actives)
