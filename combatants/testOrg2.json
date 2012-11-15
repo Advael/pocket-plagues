@@ -1,5 +1,6 @@
 {
   "name": "Priaporpoise",
+  "kind": "Organism",
   "essences" : "Water Nuclear",
   "stats":
     {
