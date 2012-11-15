@@ -1,23 +1,22 @@
-from organism import organism
+from combatant import combatant
 from trainer import trainer
 import control
 
 class battle:
   def __init__(self, one, two):
-    self.one, self.two = one, two
-    for i in [self.one, self.two]:
-      if type(i) == type(organism):
-        i.setController(control.dumb)
-      elif type(i) == type(trainer):
-        i.setController(control.basicPlayer)
+    self.one, self.two = combatant(one), combatant(two)
   def turn(self):
-    phaseTrainers()
-    
-
+    self.phaseTrainers()
+    for i in sorted([self.one, self.two], key=getSpeed):
+      self.phaseOrganism(i)
     #Do trainer phase simultaneously
-      #No part of trainer phase can affect
+      #No part of trainer phase can affect any entity other than
+      #their own organism EXCEPT when sampling
     #Do organism actions in descending order of speed
   def phaseTrainers(self):
-    pass
-  def phase(self, organism):
+    print "Trainer phase"
+  def phaseOrganism(self, organism):
+    print organism.name + " phase"
 
+def getSpeed(organism):
+  return organism.stats.speed
