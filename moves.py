@@ -1,7 +1,11 @@
 from fuzzywuzzy import process, fuzz
-from matrix import check
-from organism import moveMax
+from essences import check
 from errors import ExceedError
+
+moveMax = 100
+moveCount = 8
+activeCount = 4
+
 
 
 class _move:
