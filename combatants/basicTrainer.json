@@ -1,4 +1,5 @@
 {
+  "name" : "Kid Man Thomas"
   "essences" : "",
   "stats":
     {
@@ -33,5 +34,9 @@
           "mode" : "Trainer",
           "active" : 1
         }
-    }  
+    } 
+  "organisms":
+    {
+      "Priaporpoise",
+    } 
 }

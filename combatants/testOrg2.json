@@ -1,6 +1,6 @@
 {
-  "name" : "Nebulouse",
-  "essences" : "SPACE PARASITE!!!",
+  "name": "Priaporpoise",
+  "essences" : "Water Nuclear",
   "stats":
     {
       "health":  100,
@@ -9,7 +9,7 @@
       "defense":  50,
       "special":  50,
       "resist":   25,
-      "speed":    50,
+      "speed":    60,
       "evade":    50    
     },
   "moves":
