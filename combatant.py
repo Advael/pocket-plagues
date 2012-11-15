@@ -7,7 +7,7 @@ from rules import *
 class combatant:
   def __init__(self, jsonfile):
     self.__dict__ = dict(self.__dict__.items() + load(open(jsonfile)).items())
-    self.types, self.points = _types(self.types)
+    self.essences, self.points = _essences(self.essences)
     self.stats = _stats(self.stats)
     self.moves = [_move(m) for m in self.moves.items()]
     self.actives = [m for m in self.moves if m.active == 1]
@@ -15,9 +15,9 @@ class combatant:
     assert self.points <= costMax, ExceedError
 
 
-def _types(types):
-    t = set(map(check, types.split(" ")))
-    p = typeCost * max(len(t), 0)
+def _essences(essences):
+    t = set(map(check, essences.split(" ")))
+    p = essenceCost * max(len(t), 0)
     return t, p
 
 

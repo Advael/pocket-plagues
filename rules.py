@@ -1,4 +1,4 @@
-typeCost = 50
+essenceCost = 50
 statMax = 100
 costMax = 1000
 moveMax = 100
