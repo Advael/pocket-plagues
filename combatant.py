@@ -2,10 +2,7 @@ from simplejson import load
 from essences import check
 from moves import _move
 from errors import ExceedError
-
-typeCost = 50
-statMax = 100
-costMax = 1000
+from rules import *
 
 class combatant:
   def __init__(self, jsonfile):

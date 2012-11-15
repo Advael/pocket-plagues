@@ -1,5 +1,5 @@
 {
-  "types" : "Electric Electric space FIRE!",
+  "essences" : "Electric Electric space FIRE!",
   "stats":
     {
       "health":  100,
@@ -15,7 +15,7 @@
     {
       "Basic Test Attack":
         {
-          "type" : "Time",
+          "essence" : "Time",
           "mode" : "Attack",
           "acc" : 50,
           "dmg" : 50,
@@ -24,7 +24,7 @@
         },
       "Basic Inactive":
         {
-          "type" : "Time",
+          "essence" : "Time",
           "mode" : "Attack",
           "acc" : 50,
           "dmg" : 25,
