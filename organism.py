@@ -12,4 +12,4 @@ class organism:
 
 
 def _control(tactic):
-  return control.keys.__dict__[tactic]()
+  return control.keys[tactic]()
