@@ -1,9 +1,9 @@
 {
   "name" : "Template",
   "tactic" : "Dumb",
-  "essences" : "Electric",
   "combat":
   {
+  "essences" : "Electric",
     "stats":
     {
       "health":   50,
