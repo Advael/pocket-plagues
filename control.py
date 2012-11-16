@@ -4,7 +4,8 @@ class trained:
   pass
 
 class dumb:
-  pass
+  def __call__(self, moves):
+    return choice(moves)
 
 keys = {
   "Trained":trained,

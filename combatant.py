@@ -13,7 +13,7 @@ class combatant:
     self.actives = [m for m in self.moves if m.active == 1]
     self.points += self.stats._p + sum([m._p for m in self.moves])
     assert self.points <= costMax, ExceedError
-
+    self.currentHealth = self.stats.health
 
 def _essences(essences):
     t = set(map(check, essences.split(" ")))
