@@ -1,0 +1,40 @@
+{
+  "name" : "Template",
+  "tactic" : "Dumb",
+  "combat":
+  {
+    "essences" : "Electric",
+    "stats":
+    {
+      "health":   50,
+      "meter":    50,
+      "attack":   50,
+      "defense":  50,
+      "special":  50,
+      "resist":   25,
+      "speed":    50,
+      "evade":    25
+    },
+  "moves":
+  {
+      "Attack":
+      {
+          "essence" : "Time",
+          "mode" : "Attack",
+          "accuracy" : 50,
+          "damage" : 50,
+          "properties": {},
+          "active" : 1
+      },
+      "Special":
+      {
+          "essence" : "Time",
+          "mode" : "Special",
+          "accuracy" : 50,
+          "damage" : 50,
+          "properties": {},
+          "active" : 1
+      }
+    }
+  }
+}

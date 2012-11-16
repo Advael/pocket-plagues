@@ -5,8 +5,8 @@ from errors import ExceedError
 from rules import *
 
 class combatant:
-  def __init__(self, jsonfile):
-    self.__dict__ = dict(self.__dict__.items() + load(open(jsonfile)).items())
+  def __init__(self, combatantDict):
+    self.__dict__ = combatantDict
     self.essences, self.points = _essences(self.essences)
     self.stats = _stats(self.stats)
     self.moves = [_move(m) for m in self.moves.items()]
