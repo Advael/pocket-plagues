@@ -25,16 +25,16 @@ class _move:
 
   def execute(self, user, target):
     if self.mode in ["Attack", "Special"]:
-      if self.accuracy > target.stats.evade:
+      if self.accuracy > target.combat.stats.evade:
         result = self.damage
-        result *= matchup(self.essence, target.essences)
-        if self.essence in user.essences:
+        result *= matchup(self.essence, target.combat.essences)
+        if self.essence in user.combat.essences:
           result *= Fraction(3/2)
         if self.mode == "Attack":
-          result *= user.stats.attack / target.stats.defense
+          result *= user.combat.stats.attack / target.combat.stats.defense
         elif self.mode == "Special":
-          result *= user.stats.special ** 2 / target.stats.resist ** 2
-        return int(result)
+          result *= user.combat.stats.special ** 2 / target.combat.stats.resist ** 2
+        return (target, int(result))
       else:
         return "Miss"
     elif self.mode == "Spell":
