@@ -6,17 +6,15 @@ import control
 class battle:
   def __init__(self, one, two):
     for i in [one, two]:
-      if type(i) == type(player()):
+      if isinstance(i, trainer.trainer) == True:
         pass
-      elif type(i) == type(trainer()):
-        pass
-      if type(i) == type(organism()):
+      if isinstance(i, organism.organism) == True:
         pass
   def turn(self):
     self.phaseTrainers()
     self.resolve()
     if not (self.one.stats.speed == self.two.stats.speed):
-      for i in sorted([self.one., self.two.active], key=getSpeed):
+      for i in sorted([self.one.active, self.two.active], key=getSpeed):
         self.phaseOrganism(i)
         self.resolve()
     else:

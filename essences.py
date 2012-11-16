@@ -21,7 +21,7 @@ def matchup(offense, defense):
   n = 1
   d = 1
   o = essences.matrix[essences.names[check(offense)]]
-  if type(defense) == type(str()):
+  if isinstance(defense, str):
     defense = defense.split(" ")
   for i in defense:
     n *= o[essences.names[check(i)]]
