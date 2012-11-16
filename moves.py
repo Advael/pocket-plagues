@@ -11,8 +11,8 @@ class _move:
     if fuzz.ratio(self.mode, "Trainer") > 90:
       pass
     else:
-      if process.extract(self.mode, ["Attack", "Special"])[1] > 90:
-        self._p = self.dmg + self.acc
+      if process.extract(self.mode, ["Attack", "Special"])[1] > 100:
+        self._p = self.damage + self.accuracy
         self.essence = check(self.essence) # ONLY for atk and spatk!
       elif fuzz.ratio(self.mode, "Spell") > 90:
         pass
